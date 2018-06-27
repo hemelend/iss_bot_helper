@@ -61,6 +61,78 @@ namespace SFBot.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The Region &quot;{0} is invalid. Please try again..
+        /// </summary>
+        internal static string AreaRegionsDialog_InvalidOption {
+            get {
+                return ResourceManager.GetString("AreaRegionsDialog_InvalidOption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please select an Area Region:.
+        /// </summary>
+        internal static string AreaRegionsDialog_Prompt {
+            get {
+                return ResourceManager.GetString("AreaRegionsDialog_Prompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View Regions.
+        /// </summary>
+        internal static string AreaRegionsDialog_Select {
+            get {
+                return ResourceManager.GetString("AreaRegionsDialog_Select", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please Select an Item.
+        /// </summary>
+        internal static string PagedCarouselDialog_DefaultPrompt {
+            get {
+                return ResourceManager.GetString("PagedCarouselDialog_DefaultPrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Want more options?.
+        /// </summary>
+        internal static string PagedCarouselDialog_MoreOptions {
+            get {
+                return ResourceManager.GetString("PagedCarouselDialog_MoreOptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yes, Please!.
+        /// </summary>
+        internal static string PagedCarouselDialog_ShowMe {
+            get {
+                return ResourceManager.GetString("PagedCarouselDialog_ShowMe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Helper to choose the right Solution area for Specialist Finder.
+        /// </summary>
+        internal static string RootDialog_SF_Solution_Area {
+            get {
+                return ResourceManager.GetString("RootDialog_SF_Solution_Area", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Oops! Something went wrong after too many invalid attemps. Maybe you can start over again..
+        /// </summary>
+        internal static string RootDialog_TooManyAttempts {
+            get {
+                return ResourceManager.GetString("RootDialog_TooManyAttempts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Welcome to ISS Bot helper.
         /// </summary>
         internal static string RootDialog_Welcome_Message {
@@ -93,6 +165,33 @@ namespace SFBot.Properties {
         internal static string RootDialog_Welcome_Subtitle {
             get {
                 return ResourceManager.GetString("RootDialog_Welcome_Subtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Subsidiary &quot;{0} is invalid. Please try again..
+        /// </summary>
+        internal static string SubsidiariesDialog_InvalidOption {
+            get {
+                return ResourceManager.GetString("SubsidiariesDialog_InvalidOption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please select a Subsidiary:.
+        /// </summary>
+        internal static string SubsidiariesDialog_Prompt {
+            get {
+                return ResourceManager.GetString("SubsidiariesDialog_Prompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View Subsidiaries.
+        /// </summary>
+        internal static string SubsidiariesDialog_Select {
+            get {
+                return ResourceManager.GetString("SubsidiariesDialog_Select", resourceCulture);
             }
         }
     }

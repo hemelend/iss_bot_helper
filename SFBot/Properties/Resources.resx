@@ -117,6 +117,31 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AreaRegionsDialog_InvalidOption" xml:space="preserve">
+    <value>The Region "{0} is invalid. Please try again.</value>
+    <comment>{0} is Region name</comment>
+  </data>
+  <data name="AreaRegionsDialog_Prompt" xml:space="preserve">
+    <value>Please select an Area Region:</value>
+  </data>
+  <data name="AreaRegionsDialog_Select" xml:space="preserve">
+    <value>View Regions</value>
+  </data>
+  <data name="PagedCarouselDialog_DefaultPrompt" xml:space="preserve">
+    <value>Please Select an Item</value>
+  </data>
+  <data name="PagedCarouselDialog_MoreOptions" xml:space="preserve">
+    <value>Want more options?</value>
+  </data>
+  <data name="PagedCarouselDialog_ShowMe" xml:space="preserve">
+    <value>Yes, Please!</value>
+  </data>
+  <data name="RootDialog_SF_Solution_Area" xml:space="preserve">
+    <value>Helper to choose the right Solution area for Specialist Finder</value>
+  </data>
+  <data name="RootDialog_TooManyAttempts" xml:space="preserve">
+    <value>Oops! Something went wrong after too many invalid attemps. Maybe you can start over again.</value>
+  </data>
   <data name="RootDialog_Welcome_Message" xml:space="preserve">
     <value>Welcome to ISS Bot helper</value>
   </data>
@@ -128,5 +153,15 @@
   </data>
   <data name="RootDialog_Welcome_Subtitle" xml:space="preserve">
     <value>These are the options that you are looking for!</value>
+  </data>
+  <data name="SubsidiariesDialog_InvalidOption" xml:space="preserve">
+    <value>The Subsidiary "{0} is invalid. Please try again.</value>
+    <comment>{0} is Subsidiary name</comment>
+  </data>
+  <data name="SubsidiariesDialog_Prompt" xml:space="preserve">
+    <value>Please select a Subsidiary:</value>
+  </data>
+  <data name="SubsidiariesDialog_Select" xml:space="preserve">
+    <value>View Subsidiaries</value>
   </data>
 </root>
