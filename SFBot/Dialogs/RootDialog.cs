@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Configuration;
 using System.Globalization;
 using System.Threading.Tasks;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.FormFlow;
 using Microsoft.Bot.Connector;
+
 using SFBot.Models;
 using SFBot.Properties;
 
@@ -15,6 +17,13 @@ namespace SFBot.Dialogs
     {
         private readonly ISFBotDialogFactory dialogFactory;
         private Models.SFRequest SFRequest;
+        private bool userWelcomed;
+
+        private static readonly string endpointUrl = ConfigurationSettings.AppSettings["EndPointUrl"];
+        //private static readonly string authorizationKey = ConfigurationManager.AppSettings["AuthorizationKey"];
+        //private static readonly string databaseId = ConfigurationManager.AppSettings["DatabaseId"];
+        //private static readonly string collectionId = ConfigurationManager.AppSettings["CollectionId"];
+
 
         public RootDialog(ISFBotDialogFactory dialogFactory)
         {
@@ -23,7 +32,23 @@ namespace SFBot.Dialogs
 
         public async Task StartAsync(IDialogContext context)
         {
-            context.Wait(MessageReceivedAsync);
+            //context.Wait(MessageReceivedAsync);
+            string userName;
+
+            if (!context.UserData.TryGetValue("username", out userName))
+            {
+                PromptDialog.Text(context, ResumeAfterPrompt, "Before get started, please tell me your name?");
+                return;
+            }
+
+            if (!userWelcomed)
+            {
+                userWelcomed = true;
+                await context.PostAsync($"Welcome back {userName}!");
+
+                context.Wait(MessageReceivedAsync);
+            }
+
         }
 
         private async Task MessageReceivedAsync(IDialogContext context, IAwaitable<object> result)
@@ -31,6 +56,24 @@ namespace SFBot.Dialogs
             var activity = await result as Activity;
 
             await this.WelcomeMessageAsync(context);
+        }
+        private async Task ResumeAfterPrompt(IDialogContext context, IAwaitable<string> result)
+        {
+            try
+            {
+                var userName = await result;
+                userWelcomed = true;
+
+                await context.PostAsync($"Welcome {userName}!");
+
+                context.UserData.SetValue("username", userName);
+            }
+            catch (TooManyAttemptsException ex)
+            {
+                await context.PostAsync($"Oops! Something went wrong :( Technical Details: {ex}");
+            }
+
+            context.Wait(MessageReceivedAsync);
         }
 
         private async Task WelcomeMessageAsync(IDialogContext context)
@@ -69,7 +112,7 @@ namespace SFBot.Dialogs
             }
             else if (message.Text == Resources.RootDialog_Welcome_Solution_Helper)
             {
-                await this.StartOverAsync(context, Resources.RootDialog_SF_Solution_Area);
+                await this.StartOverTextAsync(context, Resources.RootDialog_SF_Solution_Area);
             }
         }
 
@@ -79,14 +122,8 @@ namespace SFBot.Dialogs
 
             this.SFRequest.Area = selectedRegion;
 
-            if (selectedRegion == "Region 1")
-            {
-                context.Call(this.dialogFactory.Create<SubsidiariesDialog>(), this.AfterSubsidiarySelected);
-            }
-            else
-            {
-                //context.Call()
-            }
+            context.Call(this.dialogFactory.Create<SubsidiariesDialog>(), this.AfterSubsidiarySelected);
+
         }
 
         private async Task AfterSubsidiarySelected(IDialogContext context, IAwaitable<string> result)
@@ -102,13 +139,16 @@ namespace SFBot.Dialogs
             }
             catch (TooManyAttemptsException)
             {
-                await this.StartOverAsync(context, Resources.RootDialog_TooManyAttempts);
+                await this.StartOverTextAsync(context, Resources.RootDialog_TooManyAttempts);
             }
         }
 
         private async Task AfterRequestForm(IDialogContext context, IAwaitable<SFRequest> result)
         {
-            await this.StartOverAsync(context, Resources.RootDialog_SF_Solution_Area);
+            context.PrivateConversationData.SetValue("sfrequest", SFRequest);
+
+            
+            await this.StartOverTextAsync(context, Resources.RootDialog_SF_Solution_Area);
         }
 
         //private async Task AfterOpportunity(IDialogContext context, IAwaitable<OpportunityID> result)
@@ -122,19 +162,22 @@ namespace SFBot.Dialogs
         //    PromptDialog.Choice(context, this.AfterDeliveryDateSelected, new[] { StringConstants.Today, StringConstants.Tomorrow }, Resources.RootDialog_DeliveryDate_Prompt);
         //}
 
-        // TODO: review the stackoverflow execption thrown when makemessage method!!!!
-        private async Task StartOverAsync(IDialogContext context, string text)
+        private async Task StartOverTextAsync(IDialogContext context, string text)
         {
             var message = context.MakeMessage();
             message.Text = text;
-            await this.StartOverAsync(context, text);
+            
+            await this.StartOverAsync(context, message);
+            //context.Done<string>(null);
         }
 
         private async Task StartOverAsync(IDialogContext context, IMessageActivity message)
         {
             await context.PostAsync(message);
-            this.SFRequest = new Models.SFRequest();
+
             await this.WelcomeMessageAsync(context);
+            
+
         }
     }
 }

@@ -10,13 +10,17 @@ namespace SFBot
     {
         private IEnumerable<AreaRegion> areaRegions;
 
+        
+
+        string[] regions = new string[] { "APAC", "Canada", "CentralAndEasternEurope", "France", "Germany", "GreaterChina", "India", "Japan", "Latam", "MEA", "UK", "UnitedStates", "WesternEurope" };
+
         public InMemoryAreaRegionsRepository()
         {
-            this.areaRegions = Enumerable.Range(1, 5)
+            this.areaRegions = Enumerable.Range(1, regions.Length)
                 .Select(i => new AreaRegion
                 {
-                    Name = $"Region {i}",
-                    ImageUrl = $"https://sfbotimages.blob.core.windows.net/regions/UK.png"
+                    Name = $"{regions.GetValue(i - 1)}",
+                    ImageUrl = $"https://sfbotimages.blob.core.windows.net/regions/{regions.GetValue(i - 1)}.png"
                 });
         }
 

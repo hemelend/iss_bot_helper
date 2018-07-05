@@ -13,7 +13,7 @@ namespace SFBot.Dialogs
     public abstract class PagedCarouselDialog<T> : IDialog<T>
     {
         private int pageNumber = 1;
-        private int pageSize = 5;
+        private int pageSize = 20;
 
         public virtual string Prompt { get; }
 
