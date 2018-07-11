@@ -188,6 +188,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="BasicDatabaseProvider.cs" />
+    <Compile Include="GenericCollectionProvider.cs" />
+    <Compile Include="ICollectionProvider.cs" />
+    <Compile Include="IDatabaseProvider.cs" />
     <Compile Include="InMemorySubsidiariesRepository.cs" />
     <Compile Include="Dialogs\DialogFactory.cs" />
     <Compile Include="Dialogs\IDialogFactory.cs" />
@@ -215,6 +219,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="SFBotModule.cs" />
+    <Compile Include="DocumentdbSFRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">

@@ -2,6 +2,9 @@
 using System.Configuration;
 using System.Globalization;
 using System.Threading.Tasks;
+using Microsoft.Azure.Documents;
+using Microsoft.Azure.Documents.Linq;
+using Microsoft.Azure.Documents.Client;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.FormFlow;
 using Microsoft.Bot.Connector;
@@ -19,15 +22,18 @@ namespace SFBot.Dialogs
         private Models.SFRequest SFRequest;
         private bool userWelcomed;
 
-        private static readonly string endpointUrl = ConfigurationSettings.AppSettings["EndPointUrl"];
-        //private static readonly string authorizationKey = ConfigurationManager.AppSettings["AuthorizationKey"];
-        //private static readonly string databaseId = ConfigurationManager.AppSettings["DatabaseId"];
-        //private static readonly string collectionId = ConfigurationManager.AppSettings["CollectionId"];
+        private static readonly string endpointUrl = ConfigurationManager.AppSettings["EndPointUrl"];
+        private static readonly string authorizationKey = ConfigurationManager.AppSettings["AuthorizationKey"];
+        private static readonly string databaseId = ConfigurationManager.AppSettings["DatabaseId"];
+        private static readonly string collectionId = ConfigurationManager.AppSettings["CollectionId"];
 
+        //private static DocumentClient client;
 
         public RootDialog(ISFBotDialogFactory dialogFactory)
         {
             this.dialogFactory = dialogFactory;
+
+            //DocumentdbSFRepository repository = new DocumentdbSFRepository();
         }
 
         public async Task StartAsync(IDialogContext context)
