@@ -218,6 +218,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Services\DocumentRepository.cs" />
     <Compile Include="SFBotModule.cs" />
     <Compile Include="DocumentdbSFRepository.cs" />
   </ItemGroup>

@@ -2,6 +2,7 @@
 using Microsoft.Bot.Builder.FormFlow.Advanced;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -14,8 +15,8 @@ namespace SFBot.Models
     [Serializable]
     public class SFRequest
     {
-        [BsonId]
-        public ObjectId Id { get; set; }
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; set; }
 
         [BsonElement("Area")]
         public string Area { get; set; }

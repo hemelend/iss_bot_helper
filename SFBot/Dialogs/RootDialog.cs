@@ -11,7 +11,7 @@ using Microsoft.Bot.Connector;
 
 using SFBot.Models;
 using SFBot.Properties;
-
+using SFBot.Services;
 
 namespace SFBot.Dialogs
 {
@@ -22,18 +22,15 @@ namespace SFBot.Dialogs
         private Models.SFRequest SFRequest;
         private bool userWelcomed;
 
-        private static readonly string endpointUrl = ConfigurationManager.AppSettings["EndPointUrl"];
-        private static readonly string authorizationKey = ConfigurationManager.AppSettings["AuthorizationKey"];
-        private static readonly string databaseId = ConfigurationManager.AppSettings["DatabaseId"];
-        private static readonly string collectionId = ConfigurationManager.AppSettings["CollectionId"];
-
-        //private static DocumentClient client;
+        ////private static readonly string endpointUrl = ConfigurationManager.AppSettings["EndPointUrl"];
+        ////private static readonly string authorizationKey = ConfigurationManager.AppSettings["AuthorizationKey"];
+        ////private static readonly string databaseId = ConfigurationManager.AppSettings["DatabaseId"];
+        ////private static readonly string collectionId = ConfigurationManager.AppSettings["CollectionId"];
 
         public RootDialog(ISFBotDialogFactory dialogFactory)
         {
             this.dialogFactory = dialogFactory;
-
-            //DocumentdbSFRepository repository = new DocumentdbSFRepository();
+            
         }
 
         public async Task StartAsync(IDialogContext context)
@@ -153,7 +150,10 @@ namespace SFBot.Dialogs
         {
             context.PrivateConversationData.SetValue("sfrequest", SFRequest);
 
-            
+            //await repository.CreateItemAsync(SFRequest);
+            await DocumentRepository.CreateItemAsync(SFRequest);
+
+
             await this.StartOverTextAsync(context, Resources.RootDialog_SF_Solution_Area);
         }
 
