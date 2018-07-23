@@ -38,7 +38,7 @@ namespace SFBot.Services
             {
                 if (string.IsNullOrEmpty(collectionId))
                 {
-                    collectionId = ConfigurationManager.AppSettings["CollectionId"];
+                    collectionId = ConfigurationManager.AppSettings["SFCollectionId"];
                 }
                 return collectionId;
             }
