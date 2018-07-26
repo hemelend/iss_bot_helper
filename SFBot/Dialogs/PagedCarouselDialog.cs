@@ -1,5 +1,6 @@
 ﻿using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Connector;
+using Microsoft.Bot.Connector.Teams;
 using SFBot.Properties;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ namespace SFBot.Dialogs
     public abstract class PagedCarouselDialog<T> : IDialog<T>
     {
         private int pageNumber = 1;
-        private int pageSize = 20;
+        private int pageSize = 40;
 
         public virtual string Prompt { get; }
 

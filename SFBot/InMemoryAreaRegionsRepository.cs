@@ -12,7 +12,7 @@ namespace SFBot
 
         
 
-        string[] regions = new string[] { "APAC", "Canada", "CentralAndEasternEurope", "France", "Germany", "GreaterChina", "India", "Japan", "Latam", "MEA", "UK", "UnitedStates", "WesternEurope" };
+        string[] regions = new string[] { "APAC", "Canada", "CentralAndEasternEurope", "France", "Germany", "GreaterChina", "India", "Japan", "LATAM", "MEA", "UK", "UnitedStates", "WesternEurope" };
 
         public InMemoryAreaRegionsRepository()
         {
