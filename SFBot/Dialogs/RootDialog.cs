@@ -13,6 +13,9 @@ using Microsoft.Bot.Connector.Teams;
 using SFBot.Models;
 using SFBot.Properties;
 using SFBot.Services;
+using AdaptiveCards;
+using System.Collections.Generic;
+using System.Threading;
 
 namespace SFBot.Dialogs
 {
@@ -22,11 +25,6 @@ namespace SFBot.Dialogs
         private readonly ISFBotDialogFactory dialogFactory;
         private Models.SFRequest SFRequest;
         private bool userWelcomed;
-
-        ////private static readonly string endpointUrl = ConfigurationManager.AppSettings["EndPointUrl"];
-        ////private static readonly string authorizationKey = ConfigurationManager.AppSettings["AuthorizationKey"];
-        ////private static readonly string databaseId = ConfigurationManager.AppSettings["DatabaseId"];
-        ////private static readonly string collectionId = ConfigurationManager.AppSettings["CollectionId"];
 
         public RootDialog(ISFBotDialogFactory dialogFactory)
         {
@@ -126,7 +124,36 @@ namespace SFBot.Dialogs
 
             this.SFRequest.Area = selectedRegion;
 
-            context.Call(this.dialogFactory.Create<SubsidiariesDialog>(), this.AfterSubsidiarySelected);
+            //var subsidiaries = SFDocDB.GetAllSubsidiaries(selectedRegion);
+
+            if (selectedRegion == "LATAM") {
+
+                //SubsidiariesDialog = new SubsidiariesDialog(await subsidiaries);
+
+                //SubsidiariesDialog.Regionsubs = await subsidiaries;
+
+                context.Call(this.dialogFactory.Create<SubsidiariesDialog>(), this.AfterSubsidiarySelected);
+            }
+            else
+            {
+                await this.StartOverTextAsync(context, "Currently Available only for LATAM");
+            }
+            //var carouselCards = subsidiaries.Select(it => new HeroCard
+            //{
+            //    Title = it.Name,
+            //    Images = new List<CardImage> { new CardImage(it.ImageUrl, it.Name) },
+            //    Buttons = new List<CardAction> { new CardAction(ActionTypes.ImBack, Resources.SubsidiariesDialog_Select, value: it.Name) }
+            //});
+
+            //var reply = new PagedCarouselCards
+            //{
+            //    Cards = carouselCards,
+            //    TotalCount = subsidiaries.Count()
+            //};
+
+            //await context.PostAsync(reply);
+
+            //context.Wait(this.AfterSubsidiarySelected);
 
         }
 
@@ -138,8 +165,40 @@ namespace SFBot.Dialogs
 
                 this.SFRequest.Subsidiary = selectedSubsidiary;
 
-                var requestForm = new FormDialog<Models.SFRequest>(this.SFRequest, Models.SFRequest.BuildRequestForm, FormOptions.PromptInStart);
-                context.Call(requestForm, this.AfterRequestForm);
+                var adaptivecardtest = new AdaptiveCard() {
+                    Body = new List<CardElement>()
+                    {
+                        new TextBlock() { Text = "When do you want to meet?" },
+                        new DateInput()
+                        {
+                            Id = "StartTime",
+                            Speak = "<s>When do you want to meet with the team?</s>"
+                        }
+                    },
+                    Actions = new List<ActionBase>()
+                    {
+                        new SubmitAction(){
+                            Title = "Pick!",
+                            Speak = "<s>Pick</s>"
+                        }
+                    }
+                };
+
+                Microsoft.Bot.Connector.Attachment attachment = new Microsoft.Bot.Connector.Attachment()
+                {
+                    ContentType = AdaptiveCard.ContentType,
+                    Content = adaptivecardtest
+                };
+                var reply = context.MakeMessage();
+                reply.Attachments.Add(attachment);
+
+                await context.PostAsync(reply, CancellationToken.None);
+
+                context.Wait(MessageReceivedAsync);
+
+                //var requestForm = new FormDialog<Models.SFRequest>(this.SFRequest, Models.SFRequest.BuildRequestForm, FormOptions.PromptInStart);
+                //context.Call(requestForm, this.AfterRequestForm);
+                //context.Forward()
             }
             catch (TooManyAttemptsException)
             {
@@ -152,7 +211,8 @@ namespace SFBot.Dialogs
             context.PrivateConversationData.SetValue("sfrequest", SFRequest);
 
             //await repository.CreateItemAsync(SFRequest);
-            await DocumentRepository.CreateItemAsync(SFRequest);
+            //await DocumentRepository.CreateItemAsync(SFRequest);
+            await SFDocDB.CreateItemAsync(SFRequest);
 
 
             await this.StartOverTextAsync(context, Resources.RootDialog_SF_Solution_Area);

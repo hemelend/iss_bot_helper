@@ -54,17 +54,17 @@ namespace SFBot.Models
         [Prompt("Solution Area")]
         public string SolutionArea { get; set; }
 
-        public static IForm<SFRequest> BuildRequestForm()
-        {
-            return new FormBuilder<SFRequest>()
-                .Field(nameof(CustomerName))
-                .Field(nameof(OpportunityID))
-                .Field(nameof(Demo))
-                .Field(nameof(StartTime))
-                .Field(nameof(MeetingLength))
-                .Field(nameof(Description))
-                .Field(nameof(SolutionArea))
-                .Build();
-        }
+        //public static IForm<SFRequest> BuildRequestForm()
+        //{
+        //    return new FormBuilder<SFRequest>()
+        //        .Field(nameof(CustomerName))
+        //        .Field(nameof(OpportunityID))
+        //        .Field(nameof(Demo))
+        //        .Field(nameof(StartTime))
+        //        .Field(nameof(MeetingLength))
+        //        .Field(nameof(Description))
+        //        .Field(nameof(SolutionArea))
+        //        .Build();
+        //}
     }
 }

@@ -9,7 +9,7 @@ namespace SFBot
 {
     public class InMemorySubsidiariesRepository : InMemoryRepositoryBase<Subsidiary>
     {
-        private IEnumerable<Subsidiary> subsidiaries;
+        private IEnumerable<Subsidiary> Subsidiaries;
 
         string[] APAC_Subs = new string[] { "APAC Judgment", "Australia", "Indonesia", "Korea", "Malaysia", "New Zealand", "Philippines", "SEA Emerging Region", "Singapore", "Thailand", "Vietnam" };
         string[] Canada_Subs = new string[] { "Canada" };
@@ -33,22 +33,22 @@ namespace SFBot
         public InMemorySubsidiariesRepository()
         {
             
-            this.subsidiaries = Enumerable.Range(1, APAC_Subs.Length)
+            this.Subsidiaries = Enumerable.Range(1, LATAM_Subs.Length)
                 .Select(i => new Subsidiary
                 {
-                    Name = $"{APAC_Subs.GetValue(i - 1)}",
-                    ImageUrl = $"https://placeholdit.imgix.net/~text?txtsize=48&txt={HttpUtility.UrlEncode("" + APAC_Subs.GetValue(i - 1))}&w=640&h=330"
+                    Name = $"{LATAM_Subs.GetValue(i - 1)}",
+                    ImageUrl = $"https://placeholdit.imgix.net/~text?txtsize=48&txt={HttpUtility.UrlEncode("" + LATAM_Subs.GetValue(i - 1))}&w=640&h=330"
                 });
         }
 
         public override Subsidiary GetByName(string name)
         {
-            return this.subsidiaries.SingleOrDefault(x => x.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase));
+            return this.Subsidiaries.SingleOrDefault(x => x.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase));
         }
 
         protected override IEnumerable<Subsidiary> Find(Func<Subsidiary, bool> predicate)
         {
-            return predicate != default(Func<Subsidiary, bool>) ? this.subsidiaries.Where(predicate) : this.subsidiaries;
+            return predicate != default(Func<Subsidiary, bool>) ? this.Subsidiaries.Where(predicate) : this.Subsidiaries;
         }
     }
 }

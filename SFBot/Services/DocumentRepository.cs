@@ -45,7 +45,7 @@ namespace SFBot.Services
         }
 
         private static DocumentClient client;
-        private static DocumentClient Client
+        public static DocumentClient Client
         {
             get
             {
@@ -88,7 +88,7 @@ namespace SFBot.Services
         }
 
         private static DocumentCollection collection;
-        private static DocumentCollection Collection
+        public static DocumentCollection Collection
         {
             get
             {
@@ -114,29 +114,6 @@ namespace SFBot.Services
                 col = Client.CreateDocumentCollectionAsync(databaseLink, new DocumentCollection { Id = CollectionId }).Result;
             }
             return col;
-        }
-
-        public static async Task<Document> CreateItemAsync(SFRequest sFRequest)
-        {
-            return await Client.CreateDocumentAsync(Collection.SelfLink, sFRequest);
-        }
-
-        public static SFRequest GetSFRequest(string id)
-        {
-            return Client.CreateDocumentQuery<SFRequest>(Collection.DocumentsLink)
-                        .Where(d => d.Id == id)
-                        .AsEnumerable()
-                        .FirstOrDefault();
-        }
-
-        public static async Task<Document> UpdateNoteAsync(SFRequest sFRequest)
-        {
-            Document doc = Client.CreateDocumentQuery(Collection.DocumentsLink)
-                                .Where(d => d.Id == sFRequest.Id)
-                                .AsEnumerable()
-                                .FirstOrDefault();
-
-            return await Client.ReplaceDocumentAsync(doc.SelfLink, sFRequest);
         }
     }
 }
